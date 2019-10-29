@@ -1,0 +1,63 @@
+Step 1 select 3 systems (Git repositories) from the from the following options [list] and review the summary of the same
+systems [list]. One of the projects must be the "flask" project. Document where the 3 systems are comparable and where
+the 3 systems are different in size, number of modules, classes, lines of code, commits, etc. If they are not, be sure
+to comment on what you feel the ramifications are of the differences.
+
+Step 2 collect at least two metrics for each project under analysis, use excel to generate summary statistics,
+histograms and cumulative distribution graphs. Compare the identified systems based on rationale presented above.
+
+Calculating coupling – use $pyreverse to generate package dependency, low dependency between various modules, typically,
+limits the necessary changes needed to implement a new feature or fixing a bug. To obtain coupling of primary packages
+in a system, use the following command to generate “packages_XXX.dot” file, then, use attached Python script to parse
+“packages_XX.dot” file and print out module coupling. Coupling of a module A is calculated as the number of modules that
+use module A.
+
+$pyreverse -my -s1 -a1 -k -p erpnext_prefix erpnext
+
+erpnext_prefix: output file prefix
+
+erpnext: directory of source code, replace as appropriate.
+
+ 
+
+This command should generate a file called packages_erpnext_prefix.dot that consists of all modules and their
+dependencies.
+
+A simple Python script is provided by your instructor and can be used to parse the packages.dot file
+(packages_erpnext_prefix.dot) and print out coupling for all modules. CLICK FOR SCRIPT Click for more options
+
+ 
+
+Calculating Cohesion – find class cohesion for all classes in the a project by executing the following command:
+
+ 
+
+$cohesion -d erpnext/ |grep Total |sed 's/\s\{1,\}Total: \(.*\)\%$/\1/'
+
+ 
+
+Commit Size – find number of files changed in git commits by using the following command. The command needs to be
+executed from within the git directory of the project.
+
+ 
+
+$git log --stat |grep '[0-9]\{1,\} file[s]* changed' |sed 's/\([0-9]\{1,\}\) file.*/\1/'
+
+ 
+
+ 
+
+Maintainability Index – find MI for all modules in a project by using the following command.
+
+ 
+
+$radon mi -s saleor/ |grep -v ERROR |sed 's/.* - .*(\([0-9]\{1,\}\).*/\1/'
+
+ 
+
+saleor/: directory of source code, replace as appropriate.
+
+ 
+
+Step 3 based on summary statistics of collected metrics, write 1 to 2 page report discussing and summarizing the
+structural quality of the projects under study.
