@@ -38,9 +38,13 @@ class PyReverseClient:
                     fan_in = self.pkg_fan_in.get(module_dst, 0)
                     self.pkg_fan_in.update({module_dst: fan_in + 1})
 
-        # using fan_in as coupding metric.
+        # using fan_in as coupling metric.
         for k, v in self.pkg_fan_in.items():
             print('package no {} has {} dependencies'.format(k, v))
+
+        # using fan_in as coupling metric.
+        for k, v in self.pkg_fan_in.items():
+            print('{}'.format(v))
 
 if __name__ == '__main__':
     # Sample dot file for two projects, ERPNEXT and SEALOR
