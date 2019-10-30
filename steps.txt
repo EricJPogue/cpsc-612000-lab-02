@@ -12,13 +12,22 @@ in a system, use the following command to generate “packages_XXX.dot” file, 
 “packages_XX.dot” file and print out module coupling. Coupling of a module A is calculated as the number of modules that
 use module A.
 
+** git clone https://github.com/frappe/erpnext.git
+
 $pyreverse -my -s1 -a1 -k -p erpnext_prefix erpnext
 
 erpnext_prefix: output file prefix
 
 erpnext: directory of source code, replace as appropriate.
 
- 
+** move to folder with source
+** pyreverse -my -s1 -a1 -k -p erpnext .
+pyreverse -my -s1 -a1 -k -p erpnext_prefix erpnext/
+
+
+** python3 pyreverse_client.py
+
+
 
 This command should generate a file called packages_erpnext_prefix.dot that consists of all modules and their
 dependencies.
@@ -32,6 +41,9 @@ Calculating Cohesion – find class cohesion for all classes in the a project by
 
  
 
+** pip3 install cohesion
+** cohesion -d erpnext/ |grep Total |sed 's/\s\{1,\}Total: \(.*\)\%$/\1/'
+
 $cohesion -d erpnext/ |grep Total |sed 's/\s\{1,\}Total: \(.*\)\%$/\1/'
 
  
@@ -40,7 +52,7 @@ Commit Size – find number of files changed in git commits by using the followi
 executed from within the git directory of the project.
 
  
-
+** Number of files changed on a commit
 $git log --stat |grep '[0-9]\{1,\} file[s]* changed' |sed 's/\([0-9]\{1,\}\) file.*/\1/'
 
  
@@ -50,6 +62,7 @@ $git log --stat |grep '[0-9]\{1,\} file[s]* changed' |sed 's/\([0-9]\{1,\}\) fil
 Maintainability Index – find MI for all modules in a project by using the following command.
 
  
+**radon mi -s erpnext/ |grep -v ERROR |sed 's/.* - .*(\([0-9]\{1,\}\).*/\1/'
 
 $radon mi -s saleor/ |grep -v ERROR |sed 's/.* - .*(\([0-9]\{1,\}\).*/\1/'
 

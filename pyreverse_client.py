@@ -8,11 +8,6 @@ import json
 from pylint.lint import Run
 import urllib
 import sys
-from models.module_metrics import CommitLog
-from generate_metrics import Repo
-from datastore.pg_store import PgDataStore
-
-
 
 class PyReverseClient:
 
@@ -45,14 +40,18 @@ class PyReverseClient:
 
         # using fan_in as coupding metric.
         for k, v in self.pkg_fan_in.items():
-            print(v)
+            print('package no {} has {} dependencies'.format(k, v))
 
 if __name__ == '__main__':
     # Sample dot file for two projects, ERPNEXT and SEALOR
     ERP_NEXT_DOT='/home/omari/curated-python-projects/erpnext/packages_erpnext.dot'
     SALEOR_DOT = '/home/omari/curated-python-projects/saleor/packages_saleor.dot'
+    FLASK_DOT = './packages_flask.dot'
+    ERP_NEXT_EJP='./packages_erpnext_prefix.dot'
+
 
     # Create a client object.
     pyreverse_client = PyReverseClient()
     # print out coupling for all modules.
-    pyreverse_client.get_coupling(dot_path=ERP_NEXT_DOT)
+    #pyreverse_client.get_coupling(dot_path=ERP_NEXT_DOT)
+    pyreverse_client.get_coupling(dot_path=ERP_NEXT_EJP)
